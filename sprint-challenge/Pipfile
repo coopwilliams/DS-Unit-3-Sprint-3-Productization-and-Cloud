@@ -13,6 +13,7 @@ py-openaq = "*"
 pandas = "*"
 seaborn = "*"
 matplotlib = "*"
+tabulate = "*"
 
 [requires]
 python_version = "3.6"
