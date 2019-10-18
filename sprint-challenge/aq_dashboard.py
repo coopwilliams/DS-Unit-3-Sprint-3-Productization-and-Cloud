@@ -47,3 +47,13 @@ def refresh():
         raise e
     DB.session.commit()
     return 'Data refreshed!'
+
+@APP.route('/specify', methods=['POST'])
+@APP.route('/specify/<min>', methods=['GET'])
+def specify(min=10):
+    min = min
+    try:
+        records = Record.query.filter(Record.value >= min).all()
+    except Exception as e:
+        print("error: ", e)
+    return render_template('limit.html', title=min, records=records)

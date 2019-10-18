@@ -10,8 +10,14 @@
     <h1> Air Quality in Los Angeles </h1>
     <div>
       {% block content %}
+          <p> Enter an air quality level to see all data at or above that level.
+              (Currently showing minimum of 10 µg/m³)</p>
+        <form action="/specify" method="post">
+              <input type="text" name="min" placeholder="minimum quality">
+              <input type="submit" value="See data at or above minimum">
+        </form>
         {% for record in records%}
-          <li>{{ record }}</li>
+            <li>{{ record }}</li>
         {% endfor %}
       {% endblock %}
     </div>
