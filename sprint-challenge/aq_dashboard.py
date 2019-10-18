@@ -1,5 +1,5 @@
 """OpenAQ Air Quality Dashboard with Flask."""
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import openaq
 from tabulate import tabulate
@@ -19,12 +19,13 @@ def root():
     #tabulate(la_list, headers=['datetime', 'value'], tablefmt="github")
 
 class Record(DB.Model):
+    """Individual records of air quality"""
     id = DB.Column(DB.Integer, primary_key=True)
     datetime = DB.Column(DB.String(25))
     value = DB.Column(DB.Float, nullable=False)
 
     def __repr__(self):
-        return '<{}: {}>'.format(self.datetime, self.value)
+        return '---  {}: {}  ---'.format(self.datetime, self.value)
         #tabulate([[self.datetime],[self.value]], tablefmt='grid')
         #tabulate(["id", self.id], tablefmt="github")
 
@@ -49,11 +50,13 @@ def refresh():
     return 'Data refreshed!'
 
 @APP.route('/specify', methods=['POST'])
-@APP.route('/specify/<min>', methods=['GET'])
-def specify(min=10):
-    min = min
+@APP.route('/specify/<min>/', methods=['GET'])
+def specify(min=5):
+    min = min or request.values['min']
     try:
+        if request.method == "POST":
+                min = request.values['min']
         records = Record.query.filter(Record.value >= min).all()
     except Exception as e:
-        print("error: ", e)
+        raise e
     return render_template('limit.html', title=min, records=records)
