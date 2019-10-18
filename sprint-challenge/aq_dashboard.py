@@ -1,5 +1,5 @@
 """OpenAQ Air Quality Dashboard with Flask."""
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 import openaq
 from tabulate import tabulate
@@ -13,7 +13,7 @@ DB = SQLAlchemy(APP)
 def root():
     """Base view."""
     records = Record.query.filter(Record.value >= 10).all()
-    return str(records)
+    return render_template('base.html', title='Home', records=records)
     # for i in body['results']:
     #     la_list.append((i['date']['utc'], i['value']))
     #tabulate(la_list, headers=['datetime', 'value'], tablefmt="github")

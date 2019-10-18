@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Air Quality Dashboard! {{ title }}</title>
+    <link rel="stylesheet" href="https://unpkg.com/picnic">
+    <link rel="favicon" type="image/png" href="/favicon.ico"/>
+  </head>
+
+  <body>
+    <h1> Air Quality in Los Angeles </h1>
+    <div>
+      {% block content %}
+        {% for record in records%}
+          <li>{{ record }}</li>
+        {% endfor %}
+      {% endblock %}
+    </div>
+  </body>
+
+  <footer>
+    <h5> Coop Williams </h5>
+    <h6> Lambda School DS7 </h6>
+  </footer>
+
+</html>
